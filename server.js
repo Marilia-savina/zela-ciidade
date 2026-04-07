@@ -70,7 +70,7 @@ await db.run(`
 
 })
 
-// rota de remoçao s
+// rota de remoçao 
 //delete
 app.delete('/Incidentes/:id', async (req,res) => {
 const {id} =req.params
