@@ -1,9 +1,14 @@
-const express = require ('express')
+const express = require('express')
 const {criarBanco} = require('./database')
 
-
+const cors = require('cors')
 const app = express()
+
+app.use(cors())
+
 app.use(express.json())
+
+
 
 app.get('/', (req,res) => {
 res.send(`
@@ -16,10 +21,6 @@ res.send(`
     `)
 })
 
-const PORT = 3000
-app.listen(PORT, () => {
-console.log(`servidor rodando em http://localhost:${PORT}`)
-})
 
 // rota de listagem - para buscar todos os problemas registrados
 //get 
@@ -49,9 +50,9 @@ app.get ('/Incidentes/:id', async (req,res) => {
 app.post ('/Incidentes', async (req,res) => {
 console.log (req.body)
 
-    const {Tipo_problema, Localizacao, Descricao, Prioridade, Nome_solicitante, Data_registro, Hora_registro} = req.body
-    const db = await criarBanco()
-    await db.run(`INSERT INTO Incidentes(Tipo_problema, Localizacao, Descricao, Prioridade, Nome_solicitante, Data_registro, Hora_registro) VALUES (?, ?, ?, ?, ?, ?, ? )`, [Tipo_problema, Localizacao, Descricao, Prioridade, Nome_solicitante, Data_registro, Hora_registro])
+const {Tipo_problema, Localizacao, Descricao, Prioridade, Nome_solicitante, Data_registro, Hora_registro} = req.body
+const db = await criarBanco()
+await db.run(`INSERT INTO Incidentes(Tipo_problema, Localizacao, Descricao, Prioridade, Nome_solicitante, Data_registro, Hora_registro) VALUES (?, ?, ?, ?, ?, ?, ? )`, [Tipo_problema, Localizacao, Descricao, Prioridade, Nome_solicitante, Data_registro, Hora_registro])
     res.send (`Incidente novo registrado  ${Tipo_problema} registrado na data ${Data_registro} por ${Nome_solicitante}`)
 })
 
@@ -67,7 +68,7 @@ await db.run(`
     SET Descricao = ?, Prioridade = ?, Status_resolucao= ?
     WHERE id = ?` , [Descricao, Prioridade, Status_resolucao, id])
     res.send(`o incidente ${id} foi atualizado com sucesso`)
-
+    
 })
 
 // rota de remoçao 
@@ -81,3 +82,8 @@ await db.run(`
     res.send(`o incidente de ${id} foi removido com sucesso`)
 })
 
+
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+console.log(`servidor rodando em http://localhost:${PORT}`)
+})

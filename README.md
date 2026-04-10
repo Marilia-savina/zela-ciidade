@@ -74,7 +74,7 @@ Retorna todos os registros do banco de dados
 
 ### Rota para buscar um incidente especifíco
  ```http
- GET / Incidentes/:id 
+ GET / Incidentes /:id 
  ```
  Retorna uma ocorreência especifíca
 
@@ -98,7 +98,7 @@ Retorna todos os registros do banco de dados
 ---
 ## Rota para atualizar um incidente
 ```json
-PUT  /Incidentes/:id
+PUT  / Incidentes /:id
 ```
 ### Body (JSON)
 ```json
@@ -112,7 +112,7 @@ PUT  /Incidentes/:id
 ---
 ## Rota para deletar um incidente
 ```json
-DELETE /incidentes/:id
+DELETE / incidentes /:id
 ```
 ## 🔐 
 Segurança
